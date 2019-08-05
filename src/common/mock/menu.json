@@ -1,6 +1,7 @@
 {
+    "memo":"welcom首页面，rootPath虚拟节点,代表菜单根节点",
     "welcome":"0001",
-    "rootPath":"/",
+    "rootId":"/",
     "menus":[
         {
             "id":"001",

@@ -1,13 +1,22 @@
-body {
+/* body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+} */
+/* 设置主元素高度为100%  使用flex布局*/
+.app-root{
+  height: 100%;
+  display: -ms-flexbox;
+    display: flex;
+    -ms-flex: auto;
+        flex: auto;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    /* fix firefox can't set height smaller than content on flex item */
+    min-height: 0;
+    background: #f0f2f5;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
