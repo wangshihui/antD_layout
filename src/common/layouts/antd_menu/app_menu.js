@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
-import { Icon, Layout, Menu} from 'antd';
-import menuData from "../../mock/menu.json"
+import {Icon, Layout, Menu} from 'antd';
+import getMenus, {getRootMenuId} from "../../mock/menu.js"
 import {withRouter} from "react-router-dom";
-import "./app_layout.css"
 const {SubMenu} = Menu;
 
 /**
@@ -10,56 +9,53 @@ const {SubMenu} = Menu;
  */
 class CreateSubMenu extends Component {
   render() {
-    console.log(this.props);
-    const {
-      menus,root,eventKey,...others
-    } = this.props;
-    return menus.map((menu,i) => {
+    const {eventKey,menus,root,...others} = this.props;
+    return menus.map((menu, i) => {
       if (menu.parent == root) {
-        return <SubMenu key={menu.id} {...others} eventKey={eventKey+i} title={<span> <Icon type="user" />
+        return <SubMenu key={menu.id} {...others} eventKey={eventKey + i} title={< span > <Icon type="user" />
           {menu.name} </span>}></SubMenu>
       }
     })
   }
 }
 
-
 function creatMenuIteam(menus, root) {}
 
 class AppMenu extends Component {
-  onClick=function({ item, key, keyPath, domEvent }){
-    this.props.history.push(item.props.path)
+  onClick = function ({item, key, keyPath, domEvent}) {
+    this.props.history.push(item.props.absolutePath)
   }
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.onClick=this.onClick.bind(this);
+    this.onClick = this.onClick.bind(this);
   }
-  
-  checkChildMenu=function(menus,menu){
-    return menus.filter(m=>m.parent==menu.id).length>0;
+
+  checkChildMenu = function (menus, menu) {
+    return getMenus().filter(m => m.parent == menu.id).length > 0;
   }
-  
-  createSubMenuOrIteam =function(menus,rootId){
-    return menus.map((menu,i) => {
+
+  createSubMenuOrIteam = function (menus, rootId) {
+    return getMenus().map((menu, i) => {
       console.log(menu.parent == rootId)
-      if (menu.parent == rootId && this.checkChildMenu(menus,menu)) {
-        return <Menu.ItemGroup key={menu.id}  title={ <span> <Icon type="user" />{menu.name} </span>} >
-          {this.createSubMenuOrIteam(menus,menu.id)}
+      if (menu.parent == rootId && this.checkChildMenu(menus, menu)) {
+        return <Menu.ItemGroup key={menu.id} title={< span > <Icon type="user" />{menu.name} </span>}>
+          {this.createSubMenuOrIteam(menus, menu.id)}
         </Menu.ItemGroup>
-        
-      }else if(menu.parent == rootId){
-        return <Menu.Item key={menu.id} path={menu.path} >{menu.name}</Menu.Item>
+
+      } else if (menu.parent == rootId) {
+        return <Menu.Item key={menu.id} path={menu.path} absolutePath={menu.absolutePath}>{menu.name}</Menu.Item>
       }
     })
-  } 
+  }
 
   render() {
-    const {menus, welcome,rootId} = menuData;
+    const menus = getMenus();
+    const rootId = getRootMenuId();
     return <Menu mode="inline" style={{
       borderRight: 0,
       height: '100%'
     }} onClick={this.onClick}>
-    {this.createSubMenuOrIteam(menus,rootId)}
+      {this.createSubMenuOrIteam(menus, rootId)}
     </Menu>
   }
 }

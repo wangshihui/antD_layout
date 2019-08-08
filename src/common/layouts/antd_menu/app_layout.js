@@ -1,13 +1,11 @@
 import React, {Component} from 'react';
 import {Icon, Layout} from 'antd';
+import {Route, withRouter, Switch} from "react-router";
 import AppMenu from "./app_menu"
 import AppBreadcrumb from "./app_bread_crumb"
 import AppHeader from "./app_header"
-import {withRouter,Switch,Route} from "react-router";
-import {entry_index} from "../../route/app-router"
-import Welcome from "../../../business/welcome/index"
-import NotFound from "../../../business/error/4xx"
-import menuData from "../../mock/menu.json"
+import routerCfgs,{welcomePage, notFoundPage} from "../../route/app-router"
+import getMenus from "../../mock/menu.js"
 
 const {Content, Footer, Sider, Header} = Layout;
 
@@ -32,23 +30,25 @@ class AppLayOut extends Component {
           <AppBreadcrumb></AppBreadcrumb>
           {/* 内容展示区域 */}
           <Content style={{
-            background: '#fff', 
-            // padding: 24, margin: 0, minHeight: 280 
-            }}>
+            /* padding: 24, margin: 0,   minHeight: 480 ,*/
+          
+            background: '#fff'
+          }}>
             <Switch>
-            { menuData.menus.map((route, index)=>{
-                  if(route.path){
-                   return <Route
-                    key={index}
-                    path={route.path}
-                    exact={route.exact}
-                    component={NotFound}
-                    />
+              {console.log(routerCfgs)}
+              {getMenus().map((menuRoute, index) => {
+                  if (menuRoute.path) {
+                    const componet = routerCfgs.find(routeCfg => {
+                      return routeCfg.path == menuRoute.path;
+                    })
+                    const menuComponet = (componet && componet.componet) ? componet.componet : notFoundPage;
+                    // 菜单会记录绝对路径，所以不需要prefix props.match.path
+                    const path=this.props.match.path+menuRoute.path;
+                    return <Route key={path} path={path} exact={false} component={menuComponet} />
                   }
-                }
-              )
-            }
-            <Route component={Welcome}/>
+                })
+              }
+              <Route component={welcomePage} />
             </Switch>
           </Content>
           <Footer style={{

@@ -1,23 +1,53 @@
-import Welcome from "../../business/welcome/index"
-
+import Welcome  from "../../business/welcome/index"
+import NotFound from "../../business/error/404"
+import getMenus from "../mock/menu.js"
+import {AppLayOutWithRouter} from "../layouts/antd_menu/app_layout"
+import LoginForm from "../login/login"
+import {mainEntryPath} from "../gloabal/cfg"
 const entry_index="/";
-const routerCfg=[
+const welcomePage=Welcome;
+const notFoundPage=NotFound;
+
+let routerCfgs=[
   { 
-    path:"welcome",
+    path:"/welcome",
+    componet:Welcome,
+  },
+  { 
+    path:"/manageIndex",
     componet:Welcome
   },
   { 
-    path:"manageIndex",
+    path:"/manageVersion",
     componet:Welcome
   },
   { 
-    path:"manageVersion",
+    path:"/AppSecret",
     componet:Welcome
-  },
-  { 
-    path:"devCfg",
-    componet:Welcome
+  },{
+    path:"/",
+    componet:LoginForm
+  },{
+    path:mainEntryPath,
+    componet:AppLayOutWithRouter,
+    exact:false
   }
 ]
-export {entry_index}
-export default routerCfg
+
+const menus=getMenus();
+
+
+
+
+export {entry_index,welcomePage,notFoundPage}
+routerCfgs=routerCfgs.map((route,index)=>{
+  menus.find(menu=>{
+      if(menu.path==route.path){
+          route.ismenue=true;
+      }
+    })
+    return route;
+  }
+);
+console.log(routerCfgs)
+export default routerCfgs

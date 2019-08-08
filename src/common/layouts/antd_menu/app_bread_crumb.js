@@ -4,7 +4,7 @@ import {Breadcrumb, Icon, Layout, Menu} from 'antd';
 class AppBreadcrumb extends Component {
   render() {
     return <Breadcrumb style={{
-      margin: '16px 0'
+      margin: '4px 0'
     }}>
       <Breadcrumb.Item>Home</Breadcrumb.Item>
       <Breadcrumb.Item>List</Breadcrumb.Item>
