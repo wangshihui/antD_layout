@@ -1,17 +1,35 @@
 import React, {Component} from 'react';
-import {Icon, Menu} from 'antd';
+import {Avatar , Menu, Layout,Icon} from 'antd';
+import {Route, withRouter, Switch} from "react-router";
+import { connect } from 'react-redux'
+
+const {Content, Footer, Sider, Header} = Layout;
+
 class AppHeader extends Component {
+  constructor(props) {
+    super(props)
+  }
+  
+  logout=()=>{
+    this.props.history.push("/")
+  }
+  
   render() {
     return <React.Fragment>
-        <div className="logo" />
-        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']} style={{
-            lineHeight: '64px'
+        <Layout style={{
+          background: '#001529'
         }}>
-            <Menu.Item key="1">nav 1</Menu.Item>
-            <Menu.Item key="2">nav 2</Menu.Item>
-            <Menu.Item key="3">nav 3</Menu.Item>
-        </Menu>
+        <Sider width={200}>
+          <div className="logo">111111</div>
+        </Sider>
+        <Content>main content</Content>
+        <Sider style={{"text-align":'right'}}>
+           {/* <Icon type="wallet" theme="#87d068" /> */}
+          <Avatar  style={{ backgroundColor: '#87d068' ,"margin-right":4}} icon="user" />
+          <Avatar onClick={this.logout}  className="anticon anticon-sync" style={{ backgroundColor: '#87d068' }} icon="logout" />
+        </Sider>
+      </Layout>
     </React.Fragment>
   }
 }
-export default AppHeader
+export default withRouter(AppHeader)

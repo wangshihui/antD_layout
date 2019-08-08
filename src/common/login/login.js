@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
 import {Button, Checkbox, Form, Icon, Input} from 'antd';
+import {withRouter} from "react-router";
+import {mainEntryPath} from "../gloabal/cfg"
+import { connect } from 'react-redux'
 
-class NormalLoginForm extends React.Component {
+class NormalLoginForm extends Component {
 
   constructor(props) {
     super(props)
@@ -11,6 +14,7 @@ class NormalLoginForm extends React.Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
+        this.props.history.push(mainEntryPath);
       }
     });
   };
@@ -104,4 +108,4 @@ NormalLoginForm.defaultProps = {
 const LoginForm = Form.create({name: 'normal_login'})(NormalLoginForm);
 
 export {LoginForm}
-export default LoginForm
+export default withRouter(LoginForm)

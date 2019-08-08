@@ -9,7 +9,7 @@ export const actions={login,logout} = createActions({
     "LOGOUT":payload=>payload,
 });
 
-export const reducer= handleActions({
+export const {authentication}= handleActions({
     [login]:(state)=>{
         return {...state,loginstatus:true}
     },

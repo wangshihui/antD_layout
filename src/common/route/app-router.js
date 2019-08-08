@@ -18,7 +18,7 @@ let routerCfgs=[
     componet:Welcome
   },
   { 
-    path:"/manageVersion",
+    path:"/index",
     componet:Welcome
   },
   { 
