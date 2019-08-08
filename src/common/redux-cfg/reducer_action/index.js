@@ -1,5 +1,6 @@
 import * as authCfg from "./authentication"
 
-export const actions=[...authCfg.actions]
+console.log(authCfg)
+export const {actions}=authCfg
 
-export const reducers={authCfg.authentication}
+export const reducers=authCfg.authentication

@@ -1,15 +1,15 @@
 import { createActions, handleActions } from "redux-actions"
 
-defaultState={
+const defaultState={
     loginstatus:false
 }
 
-export const actions={login,logout} = createActions({
+const {login,logout} = createActions({
     "LOGIN":payload=>payload,
     "LOGOUT":payload=>payload,
 });
 
-export const {authentication}= handleActions({
+const authentication= handleActions({
     [login]:(state)=>{
         return {...state,loginstatus:true}
     },
@@ -17,3 +17,7 @@ export const {authentication}= handleActions({
         return {...state,loginstatus:false}
     }
 },defaultState)
+
+const actions={login,logout}
+export {authentication}
+export {actions}

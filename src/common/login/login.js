@@ -3,6 +3,7 @@ import {Button, Checkbox, Form, Icon, Input} from 'antd';
 import {withRouter} from "react-router";
 import {mainEntryPath} from "../gloabal/cfg"
 import { connect } from 'react-redux'
+import {actions} from "../redux-cfg/reducer_action"
 
 class NormalLoginForm extends Component {
 
@@ -10,7 +11,9 @@ class NormalLoginForm extends Component {
     super(props)
   }
   handleSubmit = e => {
+    console.log(actions);
     e.preventDefault();
+    this.props.dispatch(actions.login())
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
@@ -24,7 +27,7 @@ class NormalLoginForm extends Component {
 
     const languageCfg = this.props.languageCfg[this.props.language];
     const {maxWidth} = this.props
-    const formMaxWidth = "max-width:".concat(maxWidth)
+    const formMaxWidth = "maxWidth:".concat(maxWidth)
     return (
       <Form onSubmit={this.handleSubmit} className="login-form" style={{
         'max-width': maxWidth
@@ -107,5 +110,13 @@ NormalLoginForm.defaultProps = {
 }
 const LoginForm = Form.create({name: 'normal_login'})(NormalLoginForm);
 
+const mapStateToProps = state => {
+  return {
+    loginStatus: state.authentication
+  }
+}
+
 export {LoginForm}
-export default withRouter(LoginForm)
+const withRouterLoginForm=withRouter(LoginForm) 
+export {withRouterLoginForm}
+export default connect(mapStateToProps)(withRouter(LoginForm))

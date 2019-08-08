@@ -2,7 +2,7 @@ import Welcome  from "../../business/welcome/index"
 import NotFound from "../../business/error/404"
 import getMenus from "../mock/menu.js"
 import {AppLayOutWithRouter} from "../layouts/antd_menu/app_layout"
-import LoginForm from "../login/login"
+import  LoginForm from "../login/login"
 import {mainEntryPath} from "../gloabal/cfg"
 const entry_index="/";
 const welcomePage=Welcome;
